@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../dbconnection/connection.js";
-
+import disease from "./disease.model.js";
+import Category from "./category.model.js";
 const Yoga = sequelize.define("yoga", {
     id: {
         type: DataTypes.INTEGER,
@@ -17,19 +18,36 @@ const Yoga = sequelize.define("yoga", {
     },
     instructions: {
         type: DataTypes.TEXT,
-        allowNull: true,
-    },
+        allowNull: false,
+    }, 
     imageUrl: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     videoUrl: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+    },
+    categoryName:{
+        type:DataTypes.STRING,
+        references:{
+            model:Category,
+            key:'categoryName'
+        }
     }
 })
 
-sequelize.sync()
+
+Category.hasMany(Yoga,{
+    foreignKey: "categoryName"
+}) 
+
+Yoga.belongsTo(Category,{
+    foreignKey:'categoryName',
+})
+
+
+sequelize.sync({})
     .then(() => {
         console.log("yoga table created");
     }).catch(err => {

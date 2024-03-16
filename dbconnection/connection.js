@@ -1,8 +1,9 @@
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize("sequalize", "root", "root", {
+const sequelize = new Sequelize("testingayurveda", "root", "root", {
     host: 'localhost',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    timezone : '+05:30'
 });
 
 sequelize.authenticate()
